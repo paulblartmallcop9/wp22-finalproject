@@ -4,7 +4,8 @@
     flex-wrap:wrap;
     height:276px;
     width:330px;
-    background:blue
+    background:blue;
+    margin: auto;
 }
 .board div {
     height:40px;
@@ -26,13 +27,18 @@
 }
 .restart{
     background: red;
-    width: 200px;
-    height: 200px;
-    position: fixed;
+    width: 150px;
+    height: 100px;
+    /*position: fixed;*/
     top: 100px;
     left: 100px;
     display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 10px auto auto;
+}
+.currentPlayer{
+    margin: auto;
+    text-align: center;
 }
