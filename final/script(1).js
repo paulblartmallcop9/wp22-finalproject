@@ -2,7 +2,6 @@ let board=document.querySelector(".board")
 let player=document.querySelector(".player")
 let playAgain=document.querySelector(".playAgain")
 let restart=document.querySelector(".restart")
-let box=0
 let winningArray = [
     [0, 1, 2, 3], [41, 40, 39, 38],[7, 8, 9, 10],
     [34, 33, 32, 31], [14, 15, 16, 17], [27, 26, 25, 24],
@@ -28,13 +27,15 @@ let winningArray = [
     [8, 15, 22, 29], [9, 16, 23, 30], [10, 17, 24, 31],
     [11, 18, 25, 32], [12, 19, 26, 33], [13, 20, 27, 34]
 ];
+let box=0
 let currentPlayer=1
+
 document.addEventListener("DOMContentLoaded", loadDOM)
-//load dom function
 
 function loadDOM(){
+    // This function loads the DOM
     createBoard()
-    player.innerHTML=currentPlayer
+    player.innerHTML=`${currentPlayer} (Red)`
     playAgain.addEventListener("click",reset)
     let squares =document.querySelectorAll(".board div")
     Array.from(squares).forEach(square=>{
@@ -42,9 +43,9 @@ function loadDOM(){
 
     })
 }
-// createBoard function
 
 function createBoard(){
+    // This function creates the board
     for(let i=0;i<49;i++){
         let div =document.createElement("div")
         div.setAttribute("data-id",i)
@@ -55,20 +56,20 @@ function createBoard(){
         board.appendChild(div)
     }
 }
-//clickBoard function
 
 function clickBox(){
+    // This function checks when a box has been clicked
     let squares =document.querySelectorAll(".board div")
     let click =parseInt(this.dataset.id)
     if( squares[click+7].classList.contains("taken") && !squares[click].classList.contains("taken")){
         if(currentPlayer===1){
             currentPlayer=2
-            player.innerHTML=currentPlayer
+            player.innerHTML=`${currentPlayer} (Yellow)`
             this.className="player-one taken"
             checkWon()
         }else if(currentPlayer===2){
             currentPlayer=1
-            player.innerHTML=currentPlayer
+            player.innerHTML=`${currentPlayer} (Red)`
             this.className="player-two taken"
             checkWon()
         }
@@ -77,12 +78,12 @@ function clickBox(){
             setTimeout(()=>restart.style.display="flex",500)
         }
     }else{
-        alert("You cannot build on an empty space or on a space that has not been built on")
+        // alert("You cannot build on an empty space or on a space that has not been built on")
     }
 }
-//the checkWon function
 
 function checkWon(){
+    // This function checks if a player has won
     let squares =document.querySelectorAll(".board div")
     for (let y=0;y<winningArray.length;y++){
 
@@ -102,7 +103,9 @@ function checkWon(){
 
     }
 }
+
 function reset(){
+    // This function resets the game
     board.innerHTML=""
     loadDOM()
     restart.style.display="none"
