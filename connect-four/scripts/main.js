@@ -66,15 +66,13 @@ function clickBox(){
             player.innerHTML=currentPlayer
             this.className="player-one taken"
             checkWon()
+            checkTie()
         }else if(currentPlayer===2){
             currentPlayer=1
             player.innerHTML=currentPlayer
             this.className="player-two taken"
             checkWon()
-        }
-        if(box===42){
-            setTimeout(()=>alert("boxes filled"),300)
-            setTimeout(()=>restart.style.display="flex",500)
+            checkTie()
         }
     }else{
         alert("You cannot build on an empty space or on a space that has not been built on")
@@ -102,6 +100,18 @@ function checkWon(){
 
     }
 }
+//checkTie function
+
+function checkTie(){
+    let squares =document.querySelectorAll(".board div")
+    allSquares = document.getElementsByClassName("square")
+    if (allSquares.length === 0) {
+        setTimeout(() =>alert("it is a tie! "), 200)
+        setTimeout(() =>restart.style.display="flex", 500)
+    }
+}
+
+
 function reset(){
     board.innerHTML=""
     loadDOM()
