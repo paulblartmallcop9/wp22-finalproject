@@ -2,16 +2,23 @@
     border:1px solid black;
     display:flex;
     flex-wrap:wrap;
-    height:276px;
-    width:330px;
+    /*height:276px;*/
+    height:410px;
+    /*width:330px;*/
+    width:480px;
     background:blue;
     margin: auto;
 }
 .board div {
-    height:40px;
-    width:40px;
-    margin:3px;
-    border-radius:20px
+    /*height:40px;*/
+    height:60px;
+    /*width:40px;*/
+    width:60px;
+    /*margin:3px;*/
+    margin:4px;
+    /*border-radius:20px*/
+    border-radius:30px
+
 }
 .square{
     background:white;
@@ -26,7 +33,7 @@
     background:yellow;
 }
 .restart{
-    background: red;
+    /*background: red;*/
     width: 150px;
     height: 100px;
     /*position: fixed;*/
@@ -41,4 +48,10 @@
 .currentPlayer{
     margin: auto;
     text-align: center;
+    font-size: 22px;
+}
+.message{
+    font-size: 20px;
+    width:480px;
+    margin: auto;
 }
