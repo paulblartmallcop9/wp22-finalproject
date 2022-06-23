@@ -2,6 +2,7 @@ let board=document.querySelector(".board")
 let player=document.querySelector(".player")
 let playAgain=document.querySelector(".playAgain")
 let restart=document.querySelector(".restart")
+let gameData = []
 let winStatus = false
 let winningArray = [
     [0, 1, 2, 3], [41, 40, 39, 38],[7, 8, 9, 10],
@@ -61,6 +62,8 @@ function clickBox(){
     let squares =document.querySelectorAll(".board div")
     let click =parseInt(this.dataset.id)
     if( squares[click+7].classList.contains("taken") && !squares[click].classList.contains("taken") && winStatus === false){
+        let newEntry = {"square": this.dataset.id, "player": currentPlayer}
+        gameData.push(newEntry)
         if(currentPlayer===1){
             currentPlayer=2
             player.innerHTML=currentPlayer
