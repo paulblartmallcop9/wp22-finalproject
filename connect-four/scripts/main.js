@@ -66,6 +66,7 @@ function clickBox(){
     if( squares[click+7].classList.contains("taken") && !squares[click].classList.contains("taken") && winStatus === false){
         let newEntry = {"square": this.dataset.id, "player": currentPlayer}
         gameData.push(newEntry)
+        console.log(newEntry)
         if(currentPlayer===1){
             currentPlayer=2
             player.innerHTML=`Player Turn: Player ${currentPlayer} (Yellow)`
@@ -120,10 +121,10 @@ function checkTie(){
 
 function reset(){
     board.innerHTML=""
-    loadDOM()
     winStatus = false
     currentPlayer = 1
     gameData = []
     message.innerHTML = ""
+    loadDOM()
     restart.style.display="none"
 }
