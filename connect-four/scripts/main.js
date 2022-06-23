@@ -2,7 +2,7 @@ let board=document.querySelector(".board")
 let player=document.querySelector(".player")
 let playAgain=document.querySelector(".playAgain")
 let restart=document.querySelector(".restart")
-let box=0
+let winStatus = false
 let winningArray = [
     [0, 1, 2, 3], [41, 40, 39, 38],[7, 8, 9, 10],
     [34, 33, 32, 31], [14, 15, 16, 17], [27, 26, 25, 24],
@@ -60,7 +60,7 @@ function createBoard(){
 function clickBox(){
     let squares =document.querySelectorAll(".board div")
     let click =parseInt(this.dataset.id)
-    if( squares[click+7].classList.contains("taken") && !squares[click].classList.contains("taken")){
+    if( squares[click+7].classList.contains("taken") && !squares[click].classList.contains("taken") && winStatus === false){
         if(currentPlayer===1){
             currentPlayer=2
             player.innerHTML=currentPlayer
@@ -75,7 +75,7 @@ function clickBox(){
             checkTie()
         }
     }else{
-        alert("You cannot build on an empty space or on a space that has not been built on")
+        // alert("You cannot build on an empty space or on a space that has not been built on")
     }
 }
 //the checkWon function
@@ -83,21 +83,16 @@ function clickBox(){
 function checkWon(){
     let squares =document.querySelectorAll(".board div")
     for (let y=0;y<winningArray.length;y++){
-
         let square =winningArray[y]
         if(square.every(q=>squares[q].classList.contains("player-one"))){
-
-
             setTimeout(() =>alert("player one(red) wins "), 200)
             setTimeout(() =>restart.style.display="flex", 500)
-
+            winStatus = true
         }else if(square.every(q=>squares[q].classList.contains("player-two"))){
             setTimeout(() =>alert("player two(yellow) wins"), 200)
             setTimeout(() =>restart.style.display="flex", 500)
-
+            winStatus = true
         }
-
-
     }
 }
 //checkTie function
@@ -115,5 +110,6 @@ function checkTie(){
 function reset(){
     board.innerHTML=""
     loadDOM()
+    winStatus = false
     restart.style.display="none"
 }
