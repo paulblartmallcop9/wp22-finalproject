@@ -67,6 +67,15 @@ function clickBox(){
         let newEntry = {"square": this.dataset.id, "player": currentPlayer}
         gameData.push(newEntry)
         console.log(newEntry)
+        $.ajax({
+            url: 'scripts/ajax.php', //This is the current doc
+            type: "POST",
+            dataType:'json', // add json datatype to get json
+            data: newEntry,
+            success: function(data){
+                console.log(data);
+            }
+        });
         if(currentPlayer===1){
             currentPlayer=2
             player.innerHTML=`Player Turn: Player ${currentPlayer} (Yellow)`
