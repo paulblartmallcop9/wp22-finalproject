@@ -1,10 +1,10 @@
 <?php
 /* Header */
-$page_title = 'Connect four';
+$page_title = 'Connect4';
 $navigation = Array(
-    'active' => 'Connect four',
+    'active' => 'Connect4',
     'items' => Array(
-        'Connect four' => '/WP22/connect-four/index.php'
+        'Connect4' => '../connect-four/index.php'
     )
 );
 include __DIR__ . '/tpl/head.php';
