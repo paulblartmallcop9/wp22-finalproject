@@ -114,5 +114,7 @@ function reset(){
     board.innerHTML=""
     loadDOM()
     winStatus = false
+    currentPlayer = 1
+    gameData = []
     restart.style.display="none"
 }
