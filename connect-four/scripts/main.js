@@ -1,5 +1,6 @@
 let board=document.querySelector(".board")
 let player=document.querySelector(".player")
+let message=document.querySelector(".message")
 let playAgain=document.querySelector(".playAgain")
 let restart=document.querySelector(".restart")
 let gameData = []
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", loadDOM)
 
 function loadDOM(){
     createBoard()
-    player.innerHTML=currentPlayer
+    player.innerHTML=`Player Turn: Player ${currentPlayer} (Red)`
     playAgain.addEventListener("click",reset)
     let squares =document.querySelectorAll(".board div")
     Array.from(squares).forEach(square=>{
@@ -61,24 +62,31 @@ function createBoard(){
 function clickBox(){
     let squares =document.querySelectorAll(".board div")
     let click =parseInt(this.dataset.id)
+    message.innerHTML = ""
     if( squares[click+7].classList.contains("taken") && !squares[click].classList.contains("taken") && winStatus === false){
         let newEntry = {"square": this.dataset.id, "player": currentPlayer}
         gameData.push(newEntry)
         if(currentPlayer===1){
             currentPlayer=2
-            player.innerHTML=currentPlayer
+            player.innerHTML=`Player Turn: Player ${currentPlayer} (Yellow)`
             this.className="player-one taken"
             checkWon()
             checkTie()
         }else if(currentPlayer===2){
             currentPlayer=1
-            player.innerHTML=currentPlayer
+            player.innerHTML=`Player Turn: Player ${currentPlayer} (Red)`
             this.className="player-two taken"
             checkWon()
             checkTie()
         }
     }else{
         // alert("You cannot build on an empty space or on a space that has not been built on")
+        if(winStatus === false) {
+            message.innerHTML = "You cannot build on an empty space or on a space that has not been built on!"
+        }
+        else {
+            message.innerHTML = "The game is over!"
+        }
     }
 }
 //the checkWon function
@@ -88,11 +96,11 @@ function checkWon(){
     for (let y=0;y<winningArray.length;y++){
         let square =winningArray[y]
         if(square.every(q=>squares[q].classList.contains("player-one"))){
-            setTimeout(() =>alert("player one(red) wins "), 200)
+            setTimeout(() =>player.innerHTML = "Player 1 (Red) wins!")
             setTimeout(() =>restart.style.display="flex", 500)
             winStatus = true
         }else if(square.every(q=>squares[q].classList.contains("player-two"))){
-            setTimeout(() =>alert("player two(yellow) wins"), 200)
+            setTimeout(() =>player.innerHTML = "Player 2 (Yellow) wins!")
             setTimeout(() =>restart.style.display="flex", 500)
             winStatus = true
         }
@@ -116,5 +124,6 @@ function reset(){
     winStatus = false
     currentPlayer = 1
     gameData = []
+    message.innerHTML = ""
     restart.style.display="none"
 }

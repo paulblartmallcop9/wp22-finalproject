@@ -12,11 +12,11 @@ include __DIR__ . '/tpl/head.php';
 include __DIR__ . '/tpl/body_start.php';
 ?>
 
-    <div class="currentPlayer">The current player is
-        <span class="player"></span>
+    <div class="currentPlayer"><span class="player"></span>
         <div class="board"></div>
+        <div class="message"></div>
         <div class="restart">
-            <button class="playAgain">play again</button>
+            <button class="playAgain">Play Again</button>
         </div>
     </div>
 
