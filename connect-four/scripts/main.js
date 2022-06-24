@@ -31,7 +31,7 @@ let winningArray = [
     [11, 18, 25, 32], [12, 19, 26, 33], [13, 20, 27, 34]
 ];
 let currentPlayer=1
-document.addEventListener("DOMContentLoaded", loadDOM)
+document.addEventListener("DOMContentLoaded", reset)
 //load dom function
 
 function loadDOM(){
@@ -136,4 +136,13 @@ function reset(){
     message.innerHTML = ""
     loadDOM()
     restart.style.display="none"
+    $.ajax({
+        url: 'scripts/clear_board.php', //This is the current doc
+        type: "POST",
+        dataType:'json', // add json datatype to get json
+        data: gameData,
+        success: function(data){
+            console.log(data);
+        }
+    });
 }
