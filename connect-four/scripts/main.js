@@ -91,10 +91,10 @@ function clickBox(){
         }
     }else{
         // alert("You cannot build on an empty space or on a space that has not been built on")
-        if(winStatus === false) {
+        if(winStatus === false && !squares[click].classList.contains("taken")) {
             message.innerHTML = "You cannot build on an empty space or on a space that has not been built on!"
         }
-        else {
+        if(winStatus === true) {
             message.innerHTML = "The game is over!"
         }
     }
