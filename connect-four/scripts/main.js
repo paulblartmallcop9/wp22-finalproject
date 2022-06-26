@@ -77,19 +77,6 @@ function clickBox(){
                 console.log(data);
             }
         });
-        if(currentPlayer===1){
-            currentPlayer=2
-            player.innerHTML=`Player Turn: Player ${currentPlayer} (Yellow)`
-            this.className="player-one taken"
-            checkWon()
-            checkTie()
-        }else if(currentPlayer===2){
-            currentPlayer=1
-            player.innerHTML=`Player Turn: Player ${currentPlayer} (Red)`
-            this.className="player-two taken"
-            checkWon()
-            checkTie()
-        }
     }else{
         // alert("You cannot build on an empty space or on a space that has not been built on")
         if(winStatus === false && !squares[click].classList.contains("taken")) {
@@ -175,10 +162,16 @@ function checkGameData(squareItem, playerItem) {
         if (result !== true) {
             gameDataList.push(squareItem)
             if (playerItem === "1") {
+                currentPlayer = 2
+                player.innerHTML=`Player Turn: Player ${currentPlayer} (Yellow)`
                 squares[squareItem].className="player-one taken"
             } else {
+                currentPlayer = 1
+                player.innerHTML=`Player Turn: Player ${currentPlayer} (Red)`
                 squares[squareItem].className="player-two taken"
             }
+            checkWon()
+            checkTie()
         }
     }
 }
