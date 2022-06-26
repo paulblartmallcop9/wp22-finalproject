@@ -146,3 +146,17 @@ function reset(){
         }
     });
 }
+
+function getGameData() {
+    let gameDataString = $.post("scripts/data_get.php", {call_now: "True"});
+    gameDataString.done(function (data) {
+        console.log(data)
+    });
+}
+
+$(function() {
+    getGameData();
+    window.setInterval(function () {
+        getGameData();
+    }, 1000);
+});
