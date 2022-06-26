@@ -6,6 +6,6 @@ foreach ($game_data as $key => $value){
     break;
 }
 $json_file = fopen('../data/game_data.json', 'w');
-fwrite($json_file, json_encode($game_data));
+fwrite($json_file, json_encode([]));
 fclose($json_file);
 ?>
