@@ -4,6 +4,7 @@ let message=document.querySelector(".message")
 let playAgain=document.querySelector(".playAgain")
 let restart=document.querySelector(".restart")
 let gameData = []
+let gameDataList = []
 let winStatus = false
 let winningArray = [
     [0, 1, 2, 3], [41, 40, 39, 38],[7, 8, 9, 10],
@@ -156,12 +157,30 @@ function getGameData() {
                 let newItem = dataArray[item].split(":")
                 let squareItem = newItem[0]
                 let playerItem = newItem[1]
-                console.log(squareItem, playerItem)
-            } else {
-                console.log("Game data is empty!")
+                checkGameData(squareItem, playerItem)
             }
+            // else {
+            //     console.log("Game data is empty!")
+            // }
         }
     });
+}
+
+function checkGameData(squareItem, playerItem) {
+    let squares =document.querySelectorAll(".board div")
+    if (gameDataList === []) {
+        gameDataList.push(squareItem)
+    } else {
+        let result = gameDataList.includes(squareItem)
+        if (result !== true) {
+            gameDataList.push(squareItem)
+            if (playerItem === "1") {
+                squares[squareItem].className="player-one taken"
+            } else {
+                squares[squareItem].className="player-two taken"
+            }
+        }
+    }
 }
 
 $(function() {
