@@ -150,7 +150,17 @@ function reset(){
 function getGameData() {
     let gameDataString = $.post("scripts/data_get.php", {call_now: "True"});
     gameDataString.done(function (data) {
-        console.log(data)
+        let dataArray = data["game_data"].split(",")
+        for (const item in dataArray) {
+            if (dataArray[item] !== '') {
+                let newItem = dataArray[item].split(":")
+                let squareItem = newItem[0]
+                let playerItem = newItem[1]
+                console.log(squareItem, playerItem)
+            } else {
+                console.log("Game data is empty!")
+            }
+        }
     });
 }
 
