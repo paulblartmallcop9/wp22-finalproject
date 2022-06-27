@@ -11,8 +11,10 @@ include __DIR__ . '/tpl/head.php';
 
 include __DIR__ . '/tpl/body_start.php';
 ?>
+    <h1 id="gameTitle">Connect 4</h1>
 
-    <div class="currentPlayer"><span class="player"></span>
+    <div class="currentPlayer">
+        <span class="player"></span>
         <div class="board"></div>
         <div class="message"></div>
         <div class="restart">

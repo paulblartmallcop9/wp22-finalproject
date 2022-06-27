@@ -28,7 +28,7 @@ function p_print($array){
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="#">WP22 Final Project</a>
         <ul class="navbar-nav mr-auto">
             <?php $active = $navigation['active']; ?>
@@ -46,3 +46,4 @@ function p_print($array){
         </ul>
     </nav>
 </header>
+<hr id="navbarline">
