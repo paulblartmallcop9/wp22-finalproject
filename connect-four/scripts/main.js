@@ -1,11 +1,11 @@
-let board=document.querySelector(".board")
-let player=document.querySelector(".player")
-let message=document.querySelector(".message")
-let playAgain=document.querySelector(".playAgain")
-let restart=document.querySelector(".restart")
-let gameData = []
-let gameDataList = []
+let board = document.querySelector(".board")
+let player = document.querySelector(".player")
+let message = document.querySelector(".message")
+let playAgain = document.querySelector(".playAgain")
+let restart = document.querySelector(".restart")
+let currentPlayer = 1
 let winStatus = false
+let gameData = []
 let winningArray = [
     [0, 1, 2, 3], [41, 40, 39, 38],[7, 8, 9, 10],
     [34, 33, 32, 31], [14, 15, 16, 17], [27, 26, 25, 24],
@@ -31,144 +31,138 @@ let winningArray = [
     [8, 15, 22, 29], [9, 16, 23, 30], [10, 17, 24, 31],
     [11, 18, 25, 32], [12, 19, 26, 33], [13, 20, 27, 34]
 ];
-let currentPlayer=1
-document.addEventListener("DOMContentLoaded", reset)
-//load dom function
 
-function loadDOM(){
+document.addEventListener('DOMContentLoaded', resetGame)
+
+// This function loads the DOM
+function loadDOM() {
     createBoard()
-    player.innerHTML=`Player Turn: Player ${currentPlayer} (Red)`
-    playAgain.addEventListener("click",reset)
-    let squares =document.querySelectorAll(".board div")
-    Array.from(squares).forEach(square=>{
-        square.addEventListener("click",clickBox)
-
+    player.innerHTML = `Player Turn: Player ${currentPlayer} (Red)`
+    playAgain.addEventListener('click', resetGame)
+    let squares = document.querySelectorAll('.board div')
+    Array.from(squares).forEach(square => {
+        square.addEventListener('click', clickBox)
     })
 }
-// createBoard function
 
-function createBoard(){
-    for(let i=0;i<49;i++){
-        let div =document.createElement("div")
-        div.setAttribute("data-id",i)
-        div.className = "square"
-        if (i>=42){
-            div.className="taken"
+// This function creates the board with individual id numbers
+function createBoard() {
+    for (let i = 0; i < 49; i++) {
+        let div = document.createElement('div')
+        div.setAttribute('data-id', i)
+        div.className = 'square'
+        if (i >= 42) {
+            div.className = 'taken'
         }
         board.appendChild(div)
     }
 }
-//clickBoard function
 
-function clickBox(){
-    let squares =document.querySelectorAll(".board div")
-    let click =parseInt(this.dataset.id)
+// clickBoard function
+function clickBox() {
+    let squares = document.querySelectorAll('.board div')
+    let click = parseInt(this.dataset.id)
     message.innerHTML = ""
-    if( squares[click+7].classList.contains("taken") && !squares[click].classList.contains("taken") && winStatus === false){
-        let newEntry = {"square": this.dataset.id, "player": currentPlayer}
-        gameData.push(newEntry)
+    if (squares[click+7].classList.contains('taken') && !squares[click].classList.contains('taken') && winStatus === false) {
+        let newEntry = {'square': this.dataset.id, 'player': currentPlayer}
         console.log(newEntry)
         $.ajax({
-            url: 'scripts/ajax.php', //This is the current doc
-            type: "POST",
-            dataType:'json', // add json datatype to get json
+            url: "scripts/data_post.php",
+            type: 'POST',
+            dataType:'json',
             data: newEntry,
-            success: function(data){
+            success: function (data) {
                 console.log(data);
             }
         });
-    }else{
-        // alert("You cannot build on an empty space or on a space that has not been built on")
-        if(winStatus === false && !squares[click].classList.contains("taken")) {
+    } else {
+        if (winStatus === false && !squares[click].classList.contains('taken')) {
             message.innerHTML = "You cannot build on an empty space or on a space that has not been built on!"
         }
-        if(winStatus === true) {
+        if (winStatus === true) {
             message.innerHTML = "The game is over!"
         }
     }
 }
-//the checkWon function
 
-function checkWon(){
-    let squares =document.querySelectorAll(".board div")
-    for (let y=0;y<winningArray.length;y++){
-        let square =winningArray[y]
-        if(square.every(q=>squares[q].classList.contains("player-one"))){
-            setTimeout(() =>player.innerHTML = "Player 1 (Red) wins!")
-            setTimeout(() =>restart.style.display="flex", 500)
+// checkWon function
+function checkWon() {
+    let squares = document.querySelectorAll(".board div")
+    for (let y = 0; y < winningArray.length; y++) {
+        let square = winningArray[y]
+        if (square.every(q => squares[q].classList.contains('player-one'))) {
+            player.innerHTML = "Player 1 (Red) wins!"
+            setTimeout(() => restart.style.display = 'flex', 500)
             winStatus = true
-        }else if(square.every(q=>squares[q].classList.contains("player-two"))){
-            setTimeout(() =>player.innerHTML = "Player 2 (Yellow) wins!")
-            setTimeout(() =>restart.style.display="flex", 500)
+        } else if (square.every(q => squares[q].classList.contains('player-two'))) {
+            player.innerHTML = "Player 2 (Yellow) wins!"
+            setTimeout(() => restart.style.display = 'flex', 500)
             winStatus = true
         }
     }
 }
-//checkTie function
 
-function checkTie(){
-    let squares =document.querySelectorAll(".board div")
-    allSquares = document.getElementsByClassName("square")
+// checkTie function
+function checkTie() {
+    let allSquares = document.getElementsByClassName('square')
     if (allSquares.length === 0) {
-        setTimeout(() =>alert("it is a tie! "), 200)
-        setTimeout(() =>restart.style.display="flex", 500)
+        player.innerHTML = "It is a tie!"
+        setTimeout(() => restart.style.display = 'flex', 500)
     }
 }
 
-
-function reset(){
-    board.innerHTML=""
+// resetGame function
+function resetGame() {
+    board.innerHTML = ""
+    message.innerHTML = ""
     winStatus = false
     currentPlayer = 1
     gameData = []
-    message.innerHTML = ""
     loadDOM()
-    restart.style.display="none"
+    restart.style.display = 'none'
     $.ajax({
-        url: 'scripts/clear_board.php', //This is the current doc
-        type: "POST",
-        dataType:'json', // add json datatype to get json
-        data: gameData,
-        success: function(data){
+        url: "scripts/clear_board.php",
+        type: 'POST',
+        dataType: 'json',
+        success: function (data) {
             console.log(data);
         }
     });
 }
 
+// getGameData function
 function getGameData() {
     let gameDataString = $.post("scripts/data_get.php", {call_now: "True"});
     gameDataString.done(function (data) {
-        let dataArray = data["game_data"].split(",")
+        let dataArray = data['game_data'].split(",")
         for (const item in dataArray) {
-            if (dataArray[item] !== '') {
+            if (dataArray[item] !== "") {
                 let newItem = dataArray[item].split(":")
                 let squareItem = newItem[0]
                 let playerItem = newItem[1]
                 checkGameData(squareItem, playerItem)
             }
-            // else {
-            //     console.log("Game data is empty!")
-            // }
         }
     });
 }
 
+// checkGameData function
 function checkGameData(squareItem, playerItem) {
-    let squares =document.querySelectorAll(".board div")
-    if (gameDataList === []) {
-        gameDataList.push(squareItem)
+    let squares = document.querySelectorAll(".board div")
+    if (gameData === []) {
+        gameData.push(squareItem)
     } else {
-        let result = gameDataList.includes(squareItem)
+        let result = gameData.includes(squareItem)
         if (result !== true) {
-            gameDataList.push(squareItem)
+            gameData.push(squareItem)
             if (playerItem === "1") {
                 currentPlayer = 2
-                player.innerHTML=`Player Turn: Player ${currentPlayer} (Yellow)`
-                squares[squareItem].className="player-one taken"
+                player.innerHTML = `Player Turn: Player ${currentPlayer} (Yellow)`
+                squares[squareItem].className = 'player-one taken'
             } else {
                 currentPlayer = 1
-                player.innerHTML=`Player Turn: Player ${currentPlayer} (Red)`
-                squares[squareItem].className="player-two taken"
+                player.innerHTML = `Player Turn: Player ${currentPlayer} (Red)`
+                squares[squareItem].className = 'player-two taken'
             }
             checkWon()
             checkTie()
@@ -176,9 +170,9 @@ function checkGameData(squareItem, playerItem) {
     }
 }
 
-$(function() {
+$(function () {
     getGameData();
     window.setInterval(function () {
         getGameData();
-    }, 1000);
+    }, 500);
 });
