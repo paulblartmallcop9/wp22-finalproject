@@ -146,6 +146,11 @@ function getGameData() {
     });
 }
 
+function getPlayerInfo() {
+    let playerInfo = $.post("scripts/get_player_info.php", {call_now: "True"});
+    console.log(playerInfo);
+}
+
 // checkGameData function
 function checkGameData(squareItem, playerItem) {
     let squares = document.querySelectorAll(".board div")
@@ -174,5 +179,5 @@ $(function () {
     getGameData();
     window.setInterval(function () {
         getGameData();
-    }, 500);
+    }, 100);
 });
