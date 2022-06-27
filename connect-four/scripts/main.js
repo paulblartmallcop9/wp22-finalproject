@@ -148,6 +148,12 @@ function getGameData() {
 
 function getPlayerInfo() {
     let playerInfo = $.post("scripts/get_player_info.php", {call_now: "True"});
+    playerInfo.done(function (data) {
+        let playerArray = data['player_info'].split(",")
+        for (const item in playerArray) {
+            checkPlayerData(item)
+        }
+    })
     console.log(playerInfo);
 }
 
@@ -179,5 +185,6 @@ $(function () {
     getGameData();
     window.setInterval(function () {
         getGameData();
+        //getPlayerInfo();
     }, 100);
 });
