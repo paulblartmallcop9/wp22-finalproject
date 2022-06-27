@@ -32,14 +32,18 @@ let winningArray = [
     [11, 18, 25, 32], [12, 19, 26, 33], [13, 20, 27, 34]
 ];
 
-document.addEventListener('DOMContentLoaded', resetGame)
+$(document).ready(function() {
+    resetGame();
+});
 
 // This function loads the DOM
 function loadDOM() {
     createBoard()
     player.innerHTML = `Player Turn: Player ${currentPlayer} (Red)`
-    playAgain.addEventListener('click', resetGame)
-    let squares = document.querySelectorAll('.board div')
+    $(playAgain).click(function() {
+        resetGame();
+    });
+    let squares = $('.board div')
     Array.from(squares).forEach(square => {
         square.addEventListener('click', clickBox)
     })
@@ -62,7 +66,7 @@ function createBoard() {
 // This function handles a square being clicked on the board
 // and sends the data to JSON via AJAX
 function clickBox() {
-    let squares = document.querySelectorAll('.board div')
+    let squares = $('.board div')
     let click = parseInt(this.dataset.id)
     message.innerHTML = ''
     if (squares[click+7].classList.contains('taken') && !squares[click].classList.contains('taken') && winStatus === false) {
@@ -90,7 +94,7 @@ function clickBox() {
 // This function checks if a player has won by looking
 // at the presence of players in the classes of the squares
 function checkWon() {
-    let squares = document.querySelectorAll(".board div")
+    let squares = $(".board div")
     for (let y = 0; y < winningArray.length; y++) {
         let square = winningArray[y]
         if (square.every(q => squares[q].classList.contains('player-one'))) {
@@ -154,7 +158,7 @@ function getGameData() {
 // This function takes the number of the square and player
 // and handles square being colored and handles player turn
 function checkGameData(squareItem, playerItem) {
-    let squares = document.querySelectorAll('.board div')
+    let squares = $('.board div')
     if (gameData === []) {
         gameData.push(squareItem)
     } else {
