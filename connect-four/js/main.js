@@ -106,7 +106,7 @@ function checkWon() {
 }
 
 // This function checks if the game has resulted in a tie
-// by checking if the full board has been filled
+// by checking if the there are any empty squares left
 function checkTie() {
     let allSquares = document.getElementsByClassName('square')
     if (allSquares.length === 0) {
