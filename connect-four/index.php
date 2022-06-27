@@ -22,7 +22,7 @@ include __DIR__ . '/tpl/body_start.php';
         </div>
     </div>
 
-<script src="scripts/main.js"></script>
+<script src="js/main.js"></script>
 
 <?php
 include __DIR__ . '/tpl/body_end.php';

@@ -45,7 +45,8 @@ function loadDOM() {
     })
 }
 
-// This function creates the board with individual id numbers
+// This function creates the board with squares
+// and gives each square individual id numbers
 function createBoard() {
     for (let i = 0; i < 49; i++) {
         let div = document.createElement('div')
@@ -58,7 +59,8 @@ function createBoard() {
     }
 }
 
-// clickBoard function
+// This function handles a square being clicked on the board
+// and sends the data to JSON via AJAX
 function clickBox() {
     let squares = document.querySelectorAll('.board div')
     let click = parseInt(this.dataset.id)
@@ -85,7 +87,8 @@ function clickBox() {
     }
 }
 
-// checkWon function
+// This function checks if a player has won by looking
+// at the presence of players in the classes of the squares
 function checkWon() {
     let squares = document.querySelectorAll(".board div")
     for (let y = 0; y < winningArray.length; y++) {
@@ -102,7 +105,8 @@ function checkWon() {
     }
 }
 
-// checkTie function
+// This function checks if the game has resulted in a tie
+// by checking if the full board has been filled
 function checkTie() {
     let allSquares = document.getElementsByClassName('square')
     if (allSquares.length === 0) {
@@ -111,7 +115,8 @@ function checkTie() {
     }
 }
 
-// resetGame function
+// This function resets the game by resetting used variables
+// and resetting JSON data via AJAX
 function resetGame() {
     board.innerHTML = ''
     message.innerHTML = ''
@@ -130,7 +135,7 @@ function resetGame() {
     });
 }
 
-// getGameData function
+// This function retrieves the data from JSON via AJAX
 function getGameData() {
     let gameDataString = $.post('scripts/data_get.php', {call_now: 'True'});
     gameDataString.done(function (data) {
@@ -146,7 +151,8 @@ function getGameData() {
     });
 }
 
-// checkGameData function
+// This function takes the number of the square and player
+// and handles square being colored and handles player turn
 function checkGameData(squareItem, playerItem) {
     let squares = document.querySelectorAll('.board div')
     if (gameData === []) {
